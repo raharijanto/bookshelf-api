@@ -1,5 +1,5 @@
 const {
-  postBukuHandler, getBukuHandler, putBukuHandler, deleteBukuHandler,
+  postBukuHandler, getBukuHandler, putBukuHandler, deleteBukuHandler, getIDBukuHandler,
 } = require('./handler');
 
 const rute = [
@@ -14,13 +14,18 @@ const rute = [
     handler: getBukuHandler,
   },
   {
+    method: 'GET',
+    path: '/books/{id}',
+    handler: getIDBukuHandler,
+  },
+  {
     method: 'PUT',
-    path: '/books',
+    path: '/books/{id}',
     handler: putBukuHandler,
   },
   {
     method: 'DELETE',
-    path: '/books',
+    path: '/books/{id}',
     handler: deleteBukuHandler,
   },
 ];
