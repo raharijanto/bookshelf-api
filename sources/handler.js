@@ -7,11 +7,12 @@ const postBukuHandler = (request, h) => {
     name, year, author, summary, publisher, pageCount, readPage, reading,
   } = request.payload;
 
-  const { id } = nanoid(16);
+  const id = nanoid(16);
   const insertedAt = new Date().toISOString();
   const updatedAt = insertedAt;
-  let finished = false;
 
+  /* Pengecekan selesai dibaca */
+  let finished = false;
   if (readPage === pageCount) {
     finished = true;
   }
@@ -31,7 +32,6 @@ const postBukuHandler = (request, h) => {
     insertedAt,
     updatedAt,
   };
-  books.push(bukubaru);
 
   /* Response gagal buku tanpa nama */
   if (name === undefined) {
@@ -54,6 +54,7 @@ const postBukuHandler = (request, h) => {
   }
 
   /* Response berhasil buku ditambahkan */
+  books.push(bukubaru);
   const sudahmasuk = books.filter((buku) => buku.id === id).length > 0;
   if (sudahmasuk) {
     const response = h.response({
@@ -80,11 +81,12 @@ const postBukuHandler = (request, h) => {
 const getBukuHandler = () => ({
   status: 'success',
   data: {
-    books: books.map((bukubaru) => ({
-      id: bukubaru.id,
-      name: bukubaru.name,
-      publisher: bukubaru.publisher,
-    })),
+    books,
+    // books: books.map((bukubaru) => ({
+    //   id: bukubaru.id,
+    //   name: bukubaru.name,
+    //   publisher: bukubaru.publisher,
+    // })),
   },
 });
 
